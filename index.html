@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="de" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URBAN ARTWORK | Digitalized Streetwear Brand</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            orange: '#ea580c',
+                            orangeDark: '#c2410c',
+                            accent: '#f97316',
+                            charcoal: '#121212',
+                            cardBg: '#1e1e24',
+                            cardBorder: '#2e2e38'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, .font-display { font-family: 'Space Grotesk', sans-serif; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #ea580c; border-radius: 3px; }
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.8; }
+        }
+        .animate-pulse-glow { animation: pulseGlow 3s infinite; }
+    </style>
+</head>
+<body class="bg-stone-50 dark:bg-[#0c0c0e] text-stone-900 dark:text-stone-100 min-h-screen flex flex-col transition-colors duration-300">
+
+    <!-- TOP ANNOUNCEMENT BAR -->
+    <div class="bg-gradient-to-r from-brand-orange to-amber-600 text-white text-xs font-semibold py-2 px-4 text-center tracking-wider uppercase flex justify-between items-center px-6">
+        <span class="hidden md:inline">🚀 Headless Commerce Concept Store (Medusa.js + Stripe + POD Integration)</span>
+        <span class="mx-auto md:mx-0">Kostenloser Versand ab 2 T-Shirts (Inland DE)</span>
+        <span class="hidden md:inline bg-black/30 px-2 py-0.5 rounded text-[10px]">Zielpreis: 29.90 €</span>
+    </div>
+
+    <!-- MAIN NAVBAR -->
+    <header class="sticky top-0 z-40 bg-white/80 dark:bg-[#0c0c0e]/80 backdrop-blur-md border-b border-stone-200 dark:border-stone-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Brand Logo -->
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="scrollToTop()">
+                <div class="w-10 h-10 bg-brand-orange rounded-xl flex items-center justify-center text-white font-black text-xl shadow-lg shadow-brand-orange/30 font-display">
+                    UA
+                </div>
+                <div>
+                    <span class="font-display font-black text-xl tracking-tighter block leading-none">URBAN ARTWORK</span>
+                    <span class="text-[10px] text-brand-orange tracking-widest font-mono uppercase font-bold">Streetwear POD Brand</span>
+                </div>
+            </div>
+
+            <!-- Nav Links -->
+            <nav class="hidden md:flex space-x-8 text-sm font-medium">
+                <a href="#products" class="hover:text-brand-orange transition-colors">Kollektion</a>
+                <a href="#architecture" class="hover:text-brand-orange transition-colors">Headless Setup</a>
+                <a href="#calculator" class="hover:text-brand-orange transition-colors">Margen-Kalkulator</a>
+                <a href="#legal" class="hover:text-brand-orange transition-colors">Rechtliches & POD</a>
+            </nav>
+
+            <!-- Action Controls -->
+            <div class="flex items-center space-x-4">
+                <!-- Theme Toggle -->
+                <button id="themeToggleBtn" class="p-2 rounded-lg text-stone-500 hover:text-stone-900 dark:text-stone-400 dark:hover:text-white hover:bg-stone-100 dark:hover:bg-stone-800 transition-all" title="Theme wechseln">
+                    <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+                    <i data-lucide="moon" class="w-5 h-5 block dark:hidden"></i>
+                </button>
+
+                <!-- Dev API Drawer Toggle -->
+                <button id="devDrawerBtn" class="relative group flex items-center space-x-2 px-3 py-2 bg-stone-100 dark:bg-stone-800 hover:bg-brand-orange/10 dark:hover:bg-brand-orange/20 border border-stone-300 dark:border-stone-700 hover:border-brand-orange rounded-lg text-xs font-mono text-stone-700 dark:text-stone-300 transition-all">
+                    <i data-lucide="code" class="w-4 h-4 text-brand-orange"></i>
+                    <span class="hidden sm:inline">Headless Inspector</span>
+                    <span class="flex h-2 w-2 relative">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-orange opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-orange"></span>
+                    </span>
+                </button>
+
+                <!-- Shopping Cart Button -->
+                <button id="cartBtn" class="relative bg-brand-orange hover:bg-brand-orangeDark text-white p-2.5 sm:px-4 sm:py-2.5 rounded-xl font-medium flex items-center space-x-2 shadow-lg shadow-brand-orange/20 transition-all">
+                    <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                    <span class="hidden sm:inline font-bold">Warenkorb</span>
+                    <span id="cartCountBadge" class="bg-black text-white text-xs font-black w-5 h-5 rounded-full flex items-center justify-center">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="relative overflow-hidden pt-12 pb-16 lg:pt-20 lg:pb-28 border-b border-stone-200 dark:border-stone-800">
+        <div class="absolute inset-0 bg-gradient-to-br from-brand-orange/5 via-transparent to-amber-500/5 dark:from-brand-orange/10 dark:to-transparent pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-brand-orange/10 text-brand-orange border border-brand-orange/20 text-xs font-mono font-bold tracking-wide">
+                        <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+                        <span>LIMITED DIGITIZED ARTWORK EDITIONS</span>
+                    </div>
+                    <h1 class="text-4xl sm:text-6xl font-black tracking-tight leading-none uppercase">
+                        Digital Art meets <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange to-amber-500">Streetwear Fashion</span>
+                    </h1>
+                    <p class="text-stone-600 dark:text-stone-300 text-lg sm:text-xl max-w-2xl font-light">
+                        Vektorisierte, handgezeichnete Artworks auf Premium Heavyweight T-Shirts. Nachhaltig gedruckt per On-Demand Direct-to-Garment (DTG).
+                    </p>
+                    
+                    <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
+                        <a href="#products" class="px-8 py-4 bg-brand-orange hover:bg-brand-orangeDark text-white font-bold rounded-xl shadow-xl shadow-brand-orange/30 transition-all flex items-center space-x-2">
+                            <span>Kollektion entdecken</span>
+                            <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#calculator" class="px-6 py-4 bg-stone-200 dark:bg-stone-800 hover:bg-stone-300 dark:hover:bg-stone-700 text-stone-900 dark:text-white font-semibold rounded-xl transition-all border border-stone-300 dark:border-stone-700 flex items-center space-x-2">
+                            <i data-lucide="calculator" class="w-4 h-4 text-brand-orange"></i>
+                            <span>Margen-Rechner</span>
+                        </a>
+                    </div>
+
+                    <!-- Tech Badge Matrix -->
+                    <div class="pt-8 grid grid-cols-3 gap-4 border-t border-stone-200 dark:border-stone-800 text-left">
+                        <div>
+                            <span class="text-xs text-stone-500 dark:text-stone-400 font-mono block">Retail-Preis</span>
+                            <span class="text-xl font-bold font-display">29,90 €</span>
+                        </div>
+                        <div>
+                            <span class="text-xs text-stone-500 dark:text-stone-400 font-mono block">Architektur</span>
+                            <span class="text-sm font-semibold font-mono text-brand-orange">Headless API</span>
+                        </div>
+                        <div>
+                            <span class="text-xs text-stone-500 dark:text-stone-400 font-mono block">Fulfillment</span>
+                            <span class="text-sm font-semibold">DTG POD EU</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Graphic Showcase -->
+                <div class="lg:col-span-5 relative">
+                    <div class="relative mx-auto max-w-md rounded-2xl overflow-hidden shadow-2xl border-2 border-stone-200 dark:border-stone-700 bg-stone-900">
+                        <img id="heroProductImg" src="SHIRT1.jpg" alt="Featured Shirt" class="w-full h-[460px] object-cover transition-all duration-500">
+                        <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-6 text-white">
+                            <span class="px-2.5 py-1 bg-brand-orange text-white text-[10px] font-black uppercase tracking-wider rounded">Bestseller</span>
+                            <h3 id="heroProductTitle" class="text-2xl font-bold mt-2">Red Afro Queen</h3>
+                            <p class="text-xs text-stone-300">22-25 cm Vektor-Brustdruck • Charcoal Crewneck</p>
+                            <div class="mt-4 flex items-center justify-between">
+                                <span class="text-2xl font-black">29,90 €</span>
+                                <button onclick="quickAdd(1)" class="px-4 py-2 bg-white text-black hover:bg-brand-orange hover:text-white font-bold text-xs rounded-lg transition-all flex items-center space-x-1">
+                                    <i data-lucide="plus" class="w-4 h-4"></i>
+                                    <span>In den Warenkorb</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUCT CATALOG SECTION -->
+    <section id="products" class="py-16 lg:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+            <div>
+                <span class="text-xs font-mono font-bold text-brand-orange uppercase tracking-widest">Kollektion 2026</span>
+                <h2 class="text-3xl sm:text-4xl font-black uppercase tracking-tight mt-1">Exklusive POD Streetwear Designs</h2>
+            </div>
+            <p class="text-stone-500 dark:text-stone-400 text-sm max-w-md mt-4 md:mt-0">
+                Alle Artworks sind digitalisiert, frei von Handzeichnungsstrukturen und für den hochauflösenden Direkt-Textildruck (DTG) optimiert.
+            </p>
+        </div>
+
+        <!-- Products Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Product 1 -->
+            <div class="bg-white dark:bg-stone-900 rounded-2xl border border-stone-200 dark:border-stone-800 overflow-hidden shadow-lg hover:shadow-2xl hover:border-brand-orange/50 transition-all duration-300 flex flex-col group">
+                <div class="relative overflow-hidden bg-stone-800 h-80">
+                    <img src="SHIRT1.jpg" alt="Red Afro Queen T-Shirt" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute top-3 left-3 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-md text-[10px] font-mono text-white">
+                        Motiv-Höhe: ~24cm
+                    </div>
+                    <button onclick="openQuickView(1)" class="absolute bottom-3 right-3 bg-white/90 dark:bg-black/80 hover:bg-brand-orange hover:text-white text-stone-900 p-2 rounded-xl transition-all shadow-md">
+                        <i data-lucide="eye" class="w-4 h-4"></i>
+                    </button>
+                </div>
+                <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                    <div>
+                        <div class="flex justify-between items-start mb-1">
+                            <h3 class="font-bold text-xl">Red Afro Queen</h3>
+                            <span class="font-black text-lg text-brand-orange">29,90 €</span>
+                        </div>
+                        <p class="text-xs text-stone-500 dark:text-stone-400">Charcoal Crewneck • 100% Bio-Baumwolle</p>
+                    </div>
+
+                    <!-- Size Selector -->
+                    <div>
+                        <label class="text-[11px] font-mono text-stone-400 uppercase font-semibold block mb-1.5">Größe wählen</label>
+                        <div class="grid grid-cols-5 gap-1.5" id="sizeGrid-1">
+                            <button onclick="selectSize(1, 'S')" class="size-btn-1 border border-stone-300 dark:border-stone-700 hover:border-brand-orange py-1 rounded text-xs font-semibold">S</button>
+                            <button onclick="selectSize(1, 'M')" class="size-btn-1 border-2 border-brand-orange text-brand-orange font-bold py-1 rounded text-xs">M</button>
+                            <button onclick="selectSize(1, 'L')" class="size-btn-1 border border-stone-300 dark:border-stone-700 hover:border-brand-orange py-1 rounded text-xs font-semibold">L</button>
+                            <button onclick="selectSize(1, 'XL')" class="size-btn-1 border border-stone-300 dark:border-stone-700 hover:border-brand-orange py-1 rounded text-xs font-semibold">XL</button>
+                            <button onclick="selectSize(1, 'XXL')" class="size-btn-1 border border-stone-300 dark:border-stone-700 hover:border-brand-orange py-1 rounded text-xs font-semibold">XXL</button>
+                        </div>
+                    </div>
+
+                    <button onclick="addToCart(1)" class="w-full py-3 bg-stone-900 dark:bg-stone-800 hover:bg-brand-orange dark:hover:bg-brand-orange text-white font-bold rounded-xl transition-colors flex items-center justify-center space-x-2">
+                        <i data-lucide="shopping-cart" class="w-4 h-4"></i>
+                        <span>In den Warenkorb</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="bg-white dark:bg-stone-900 rounded-2xl border border-stone-200 dark:border-stone-800 overflow-hidden shadow-lg hover:shadow-2xl hover:border-brand-orange/50 transition-all duration-300 flex flex-col group">
+                <div class="relative overflow-hidden bg-stone-800 h-80">
+                    <img src="SHIRT2.jpg" alt="Golden Turban Portrait T-Shirt" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute top-3 left-3 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-md text-[10px] font-mono text-white">
+                        Motiv-Höhe: ~25cm
+                    </div>
+                    <button onclick="openQuickView(2)" class="absolute bottom-3 right-3 bg-white/90 dark:bg-black/80 hover:bg-brand-orange hover:text-white text-stone-900 p-2 rounded-xl transition-all shadow-md">
+                        <i data-lucide="eye" class="w-4 h-4"></i>
+                    </button>
+                </div>
+                <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                    <div>
+                        <div class="flex justify-between items-start mb-1">
+                            <h3 class="font-bold text-xl">Golden Turban Portrait</h3>
+                            <span class="font-black text-lg text-brand-orange">29,90 €</span>
+                        </div>
+                        <p class="text-xs text-stone-500 dark:text-stone-400">Charcoal Heavyweight • Vibrant Gold & Warm Tones</p>
+                    </div>
+
+                    <!-- Size Selector -->
+                    <div>
+                        <label class="text-[11px] font-mono text-stone-400 uppercase font-semibold block mb-1.5">Größe wählen</label>
+                        <div class="grid grid-cols-5 gap-1.5" id="sizeGrid-2">
+                            <button onclick="selectSize(2, 'S')" class="size-btn-2 border border-stone-300 dark:border-stone-700 hover:border-brand-orange py-1 rounded text-xs font-semibold">S</button>
+                            <button onclick="selectSize(2, 'M')" class="size-btn-2 border-2 border-brand-orange text-brand-orange font-bold py-1 rounded text-xs">M</button>
+                            <button onclick="selectSize(2, 'L')" class="size-btn-2 border border-stone-300 dark:border-stone-700 hover:border-brand-orange py-1 rounded text-xs font-semibold">L</button>
+                            <button onclick="selectSize(2, 'XL')" class="size-btn-2 border border-stone-300 dark:border-stone-700 hover:border-brand-orange py-1 rounded text-xs font-semibold">XL</button>
+                            <button onclick="selectSize(2, 'XXL')" class="size-btn-2 border border-stone-300 dark:border-stone-700 hover:border-brand-orange py-1 rounded text-xs font-semibold">XXL</button>
+                        </div>
+                    </div>
+
+                    <button onclick="addToCart(2)" class="w-full py-3 bg-stone-900 dark:bg-stone-800 hover:bg-brand-orange dark:hover:bg-brand-orange text-white font-bold rounded-xl transition-colors flex items-center justify-center space-x-2">
+                        <i data-lucide="shopping-cart" class="w-4 h-4"></i>
+                        <span>In den Warenkorb</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="bg-white dark:bg-stone-900 rounded-2xl border border-stone-200 dark:border-stone-800 overflow-hidden shadow-lg hover:shadow-2xl hover:border-brand-orange/50 transition-all duration-300 flex flex-col group">
+                <div class="relative overflow-hidden bg-stone-800 h-80">
+                    <img src="SHIRT3.jpg" alt="Purple Dream Silhouette T-Shirt" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute top-3 left-3 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-md text-[10px] font-mono text-white">
+                        Motiv-Höhe: ~22cm
+                    </div>
+                    <button onclick="openQuickView(3)" class="absolute bottom-3 right-3 bg-white/90 dark:bg-black/80 hover:bg-brand-orange hover:text-white text-stone-900 p-2 rounded-xl transition-all shadow-md">
+                        <i data-lucide="eye" class="w-4 h-4"></i>
+                    </button>
+                </div>
+                <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                    <div>
+                        <div class="flex justify-between items-start mb-1">
+                            <h3 class="font-bold text-xl">Purple Dream Profile</h3>
+                            <span class="font-black text-lg text-brand-orange">29,90 €</span>
+                        </div>
+                        <p class="text-xs text-stone-500 dark:text-stone-400">Burgundy Edition • Neon Purple Vector Glow</p>
+                    </div>
+
+                    <!-- Size Selector -->
+                    <div>
+                        <label class="text-[11px] font-mono text-stone-400 uppercase font-semibold block mb-1.5">Größe wählen</label>
+                        <div class="grid grid-cols-5 gap-1.5" id="sizeGrid-3">
+                            <button onclick="selectSize(3, 'S')" class="size-btn-3 border border-stone-300 dark:border-stone-700 hover:border-brand-orange py-1 rounded text-xs font-semibold">S</button>
+                            <button onclick="selectSize(3, 'M')" class="size-btn-3 border-2 border-brand-orange text-brand-orange font-bold py-1 rounded text-xs">M</button>
+                            <button onclick="selectSize(3, 'L')" class="size-btn-3 border border-stone-300 dark:border-stone-700 hover:border-brand-orange py-1 rounded text-xs font-semibold">L</button>
+                            <button onclick="selectSize(3, 'XL')" class="size-btn-3 border border-stone-300 dark:border-stone-700 hover:border-brand-orange py-1 rounded text-xs font-semibold">XL</button>
+                            <button onclick="selectSize(3, 'XXL')" class="size-btn-3 border border-stone-300 dark:border-stone-700 hover:border-brand-orange py-1 rounded text-xs font-semibold">XXL</button>
+                        </div>
+                    </div>
+
+                    <button onclick="addToCart(3)" class="w-full py-3 bg-stone-900 dark:bg-stone-800 hover:bg-brand-orange dark:hover:bg-brand-orange text-white font-bold rounded-xl transition-colors flex items-center justify-center space-x-2">
+                        <i data-lucide="shopping-cart" class="w-4 h-4"></i>
+                        <span>In den Warenkorb</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LIVE MARGIN CALCULATOR SECTION -->
+    <section id="calculator" class="py-16 bg-stone-100 dark:bg-stone-900/60 border-y border-stone-200 dark:border-stone-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto text-center mb-10">
+                <span class="text-xs font-mono font-bold text-brand-orange uppercase tracking-widest">Transparente Financials</span>
+                <h2 class="text-3xl font-black uppercase mt-1">Interaktiver Brand Margin Kalkulator</h2>
+                <p class="text-stone-500 dark:text-stone-400 text-sm mt-2">
+                    Simuliere deinen Gewinn pro verkauftem T-Shirt basierend auf dem Zielpreis von 29,90 € und flexiblen Werbekosten (CPA).
+                </p>
+            </div>
+
+            <div class="max-w-4xl mx-auto bg-white dark:bg-stone-900 rounded-2xl border border-stone-200 dark:border-stone-800 p-6 sm:p-8 shadow-xl">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <!-- Controls -->
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between text-sm font-bold mb-2">
+                                <span>Verkaufspreis (Brutto)</span>
+                                <span id="calcPriceVal" class="text-brand-orange font-mono">29.90 €</span>
+                            </div>
+                            <input type="range" id="calcPriceInput" min="20" max="45" step="0.5" value="29.9" class="w-full accent-brand-orange">
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-sm font-bold mb-2">
+                                <span>POD Einkaufskosten (Shirt + DTG)</span>
+                                <span id="calcPodVal" class="font-mono">11.00 €</span>
+                            </div>
+                            <input type="range" id="calcPodInput" min="8" max="18" step="0.5" value="11.0" class="w-full accent-brand-orange">
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-sm font-bold mb-2">
+                                <span>Werbekosten pro Verkauf (Ads CPA)</span>
+                                <span id="calcAdVal" class="font-mono">5.00 €</span>
+                            </div>
+                            <input type="range" id="calcAdInput" min="0" max="12" step="0.5" value="5.0" class="w-full accent-brand-orange">
+                        </div>
+                    </div>
+
+                    <!-- Output Card -->
+                    <div class="bg-stone-50 dark:bg-stone-800/80 rounded-xl p-6 border border-stone-200 dark:border-stone-700 space-y-3">
+                        <div class="flex justify-between text-xs text-stone-500 font-mono">
+                            <span>Abzüglich MwSt. (19%):</span>
+                            <span id="calcVatVal">-4.77 €</span>
+                        </div>
+                        <div class="flex justify-between text-xs text-stone-500 font-mono">
+                            <span>Zahlungsgebühren (Stripe/PayPal ~3%):</span>
+                            <span id="calcFeeVal">-0.90 €</span>
+                        </div>
+                        <div class="flex justify-between text-xs text-stone-500 font-mono">
+                            <span>Produktion (POD Shirt):</span>
+                            <span id="calcPodOutVal">-11.00 €</span>
+                        </div>
+                        <div class="flex justify-between text-xs text-stone-500 font-mono pb-2 border-b border-stone-200 dark:border-stone-700">
+                            <span>Marketing / Social Ads:</span>
+                            <span id="calcAdOutVal">-5.00 €</span>
+                        </div>
+                        <div class="pt-2 flex justify-between items-center">
+                            <div>
+                                <span class="text-xs uppercase font-mono font-bold text-stone-400 block">Nettogewinn / Shirt</span>
+                                <span id="calcProfitVal" class="text-2xl font-black text-emerald-500 font-display">8,23 €</span>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-xs font-mono text-stone-400 block">Gewinnmarge</span>
+                                <span id="calcMarginVal" class="text-lg font-bold font-mono text-brand-orange">27.5%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HEADLESS ARCHITECTURE EXPLANATION -->
+    <section id="architecture" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="border border-stone-200 dark:border-stone-800 rounded-3xl p-8 sm:p-12 bg-gradient-to-br from-white via-stone-50 to-amber-500/5 dark:from-stone-900 dark:via-stone-900 dark:to-brand-orange/10 relative overflow-hidden">
+            <div class="max-w-2xl">
+                <span class="text-xs font-mono font-bold text-brand-orange uppercase tracking-widest">100% Code-Freiheit</span>
+                <h2 class="text-3xl font-black uppercase mt-1">Warum Headless Commerce?</h2>
+                <p class="text-stone-600 dark:text-stone-300 text-sm mt-3 leading-relaxed">
+                    Statt starre Baukasten-Templates von Shopify oder schwere WordPress-Plattformen zu nutzen, baut URBAN ARTWORK auf ein ultraschnelles **Custom HTML/JS Frontend**, das über REST-APIs mit dem Open-Source E-Commerce Backend **Medusa.js** kommuniziert.
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
+                    <div class="flex items-start space-x-3">
+                        <i data-lucide="check-circle" class="w-5 h-5 text-brand-orange shrink-0 mt-0.5"></i>
+                        <div>
+                            <h4 class="font-bold text-sm">Eigene Benutzeroberfläche</h4>
+                            <p class="text-xs text-stone-500 dark:text-stone-400">Keine Vorlagen-Einschränkungen. 100% Branding-Kontrolle.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <i data-lucide="check-circle" class="w-5 h-5 text-brand-orange shrink-0 mt-0.5"></i>
+                        <div>
+                            <h4 class="font-bold text-sm">Keine Plattform-Monatsgebühren</h4>
+                            <p class="text-xs text-stone-500 dark:text-stone-400">Hostbar für &lt; 15 € / Monat auf Vercel + Hetzner VPS.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <i data-lucide="check-circle" class="w-5 h-5 text-brand-orange shrink-0 mt-0.5"></i>
+                        <div>
+                            <h4 class="font-bold text-sm">Automatisierte POD-APIs</h4>
+                            <p class="text-xs text-stone-500 dark:text-stone-400">Bestellungen fließen direkt zum Druckdienstleister (DTG).</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <i data-lucide="check-circle" class="w-5 h-5 text-brand-orange shrink-0 mt-0.5"></i>
+                        <div>
+                            <h4 class="font-bold text-sm">Stripe Payment Integration</h4>
+                            <p class="text-xs text-stone-500 dark:text-stone-400">Sichere Abwicklung via Apple Pay, Klarna &amp; Kreditkarte.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER & LEGAL -->
+    <footer id="legal" class="mt-auto bg-stone-900 text-stone-400 text-xs border-t border-stone-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <span class="font-display font-black text-lg text-white block mb-2">URBAN ARTWORK</span>
+                    <p class="text-stone-400 text-xs">
+                        Digitalized Streetwear Brand Concept.<br>
+                        Entwickelt für Print-on-Demand E-Commerce.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white mb-2 uppercase tracking-wider font-mono">Logistik &amp; POD</h4>
+                    <p class="text-stone-400">
+                        Produktion &amp; Versand erfolgen in Kooperation mit europäischen POD-Partnern (DTG-Standard).
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white mb-2 uppercase tracking-wider font-mono">Rechtlicher Status</h4>
+                    <ul class="space-y-1">
+                        <li class="flex items-center space-x-1.5">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                            <span>LUCID Verpackungsregister: Registriert</span>
+                        </li>
+                        <li class="flex items-center space-x-1.5">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                            <span>MwSt. 19% Ausweis konform</span>
+                        </li>
+                        <li class="flex items-center space-x-1.5">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                            <span>DSGVO &amp; SSL Verschlüsselt</span>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white mb-2 uppercase tracking-wider font-mono">Navigation</h4>
+                    <ul class="space-y-1">
+                        <li><a href="#" class="hover:text-white">Impressum (Muster)</a></li>
+                        <li><a href="#" class="hover:text-white">Datenschutzerklärung</a></li>
+                        <li><a href="#" class="hover:text-white">Widerrufsbelehrung</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-stone-800 text-center text-stone-500 flex flex-col sm:flex-row justify-between items-center">
+                <span>© 2026 URBAN ARTWORK Brand. Alle Rechte vorbehalten.</span>
+                <span class="mt-2 sm:mt-0 font-mono text-[11px]">Headless Tech-Stack: Medusa.js • Stripe • Shirtee POD API</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SHOPPING CART SIDEBAR (DRAWER) -->
+    <div id="cartDrawer" class="fixed inset-0 z-50 pointer-events-none transition-opacity duration-300 opacity-0">
+        <!-- Backdrop -->
+        <div id="cartBackdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity"></div>
+        
+        <!-- Panel -->
+        <div class="absolute right-0 top-0 bottom-0 w-full max-w-md bg-white dark:bg-stone-900 border-l border-stone-200 dark:border-stone-800 shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300 pointer-events-auto" id="cartPanel">
+            <!-- Header -->
+            <div class="p-6 border-b border-stone-200 dark:border-stone-800 flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <i data-lucide="shopping-bag" class="w-5 h-5 text-brand-orange"></i>
+                    <h3 class="font-bold text-lg font-display">Warenkorb</h3>
+                </div>
+                <button id="closeCartBtn" class="p-2 hover:bg-stone-100 dark:hover:bg-stone-800 rounded-lg">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <!-- Cart Items List -->
+            <div id="cartItemsContainer" class="flex-1 overflow-y-auto p-6 space-y-4 custom-scrollbar">
+                <!-- Dynamic Items Inserted via JS -->
+            </div>
+
+            <!-- Footer & Checkout Breakdown -->
+            <div class="p-6 border-t border-stone-200 dark:border-stone-800 bg-stone-50 dark:bg-stone-950 space-y-4">
+                <div class="space-y-2 text-xs">
+                    <div class="flex justify-between">
+                        <span class="text-stone-500">Zwischensumme (Brutto)</span>
+                        <span id="cartSubtotal" class="font-mono font-bold">0,00 €</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-stone-500">Enthaltene MwSt. (19%)</span>
+                        <span id="cartVat" class="font-mono">0,00 €</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-stone-500">Versandkosten (Standard DE)</span>
+                        <span id="cartShipping" class="font-mono">4,50 €</span>
+                    </div>
+                    <div id="freeShippingHint" class="text-[11px] text-brand-orange font-semibold">
+                        💡 Füge noch 1 Shirt hinzu für KOSTENLOSEN Versand!
+                    </div>
+                    <div class="flex justify-between text-base font-bold text-stone-900 dark:text-white pt-2 border-t border-stone-200 dark:border-stone-800">
+                        <span>Gesamtsumme</span>
+                        <span id="cartTotal" class="font-mono text-brand-orange">0,00 €</span>
+                    </div>
+                </div>
+
+                <button onclick="triggerCheckout()" class="w-full py-4 bg-brand-orange hover:bg-brand-orangeDark text-white font-bold rounded-xl shadow-lg shadow-brand-orange/30 transition-all flex items-center justify-center space-x-2">
+                    <i data-lucide="lock" class="w-4 h-4"></i>
+                    <span>Direkt zur Kasse (Stripe API)</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- HEADLESS API INSPECTOR DRAWER (DEVELOPER MODE) -->
+    <div id="devDrawer" class="fixed inset-y-0 left-0 z-50 w-full max-w-lg bg-stone-950 text-stone-200 border-r border-stone-800 shadow-2xl flex flex-col transform -translate-x-full transition-transform duration-300 font-mono text-xs">
+        <!-- Drawer Header -->
+        <div class="p-4 bg-stone-900 border-b border-stone-800 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i data-lucide="terminal" class="w-4 h-4 text-brand-orange"></i>
+                <span class="font-bold text-white">Headless API Live Inspector</span>
+            </div>
+            <button id="closeDevBtn" class="p-1.5 hover:bg-stone-800 rounded">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+        </div>
+
+        <!-- Logs Viewport -->
+        <div class="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar">
+            <div>
+                <span class="text-stone-500 block mb-1">// Medusa.js Storefront Session State</span>
+                <div class="p-3 bg-black rounded border border-stone-800 text-emerald-400 overflow-x-auto">
+                    <pre id="apiStateDisplay">{ "cart_id": "cart_01J88X...", "region": "eu-de", "currency": "eur" }</pre>
+                </div>
+            </div>
+
+            <div>
+                <div class="flex justify-between items-center mb-1">
+                    <span class="text-stone-500">// Live API Payload Log</span>
+                    <span class="text-[10px] text-brand-orange">POST /store/carts/line-items</span>
+                </div>
+                <div id="apiConsoleLog" class="p-3 bg-black rounded border border-stone-800 text-amber-300 overflow-x-auto min-h-[160px] space-y-2">
+                    <div>> System bereit. Füge ein Produkt zum Warenkorb hinzu, um API-Payloads zu simulieren...</div>
+                </div>
+            </div>
+
+            <div>
+                <span class="text-stone-500 block mb-1">// POD Webhook Simulation (Shirtee / Printful)</span>
+                <div class="p-3 bg-black rounded border border-stone-800 text-sky-400 overflow-x-auto">
+                    <pre id="podPayloadDisplay">{
+  "event": "order.created",
+  "print_file": "https://cdn.urban-artwork.com/art_vector_24cm.svg",
+  "placement": "front_chest_center",
+  "garment": "heavyweight_charcoal_crewneck"
+}</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Drawer Footer -->
+        <div class="p-4 bg-stone-900 border-t border-stone-800 text-[11px] text-stone-400">
+            <span>Powered by Medusa.js Open Source Headless Engine</span>
+        </div>
+    </div>
+
+    <!-- QUICK VIEW MODAL -->
+    <div id="quickViewModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-2xl max-w-2xl w-full p-6 relative shadow-2xl">
+            <button onclick="closeQuickView()" class="absolute top-4 right-4 p-2 hover:bg-stone-100 dark:hover:bg-stone-800 rounded-lg">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 items-center">
+                <img id="qvImg" src="" alt="Quick View Image" class="w-full h-80 object-cover rounded-xl bg-stone-800">
+                <div class="space-y-4">
+                    <span class="px-2.5 py-1 bg-brand-orange/10 text-brand-orange text-xs font-mono font-bold rounded">DTG Vector Print</span>
+                    <h3 id="qvTitle" class="text-2xl font-bold">Product Title</h3>
+                    <p id="qvDesc" class="text-xs text-stone-500 dark:text-stone-400">Digitalisiertes Vektor-Motiv ohne Handzeichnungsstrukturen. Druckgröße ~24cm auf der Brust.</p>
+                    <div class="text-2xl font-black text-brand-orange">29,90 €</div>
+                    <button id="qvAddBtn" class="w-full py-3 bg-brand-orange hover:bg-brand-orangeDark text-white font-bold rounded-xl shadow-lg transition-all">
+                        In den Warenkorb
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT APP LOGIC -->
+    <script>
+        // PRODUCTS DATA
+        const PRODUCTS = [
+            {
+                id: 1,
+                name: "Red Afro Queen",
+                price: 29.90,
+                color: "Charcoal Crewneck",
+                img: "SHIRT1.jpg",
+                printSize: "22-25 cm Brustdruck",
+                selectedSize: "M"
+            },
+            {
+                id: 2,
+                name: "Golden Turban Portrait",
+                price: 29.90,
+                color: "Charcoal Heavyweight",
+                img: "SHIRT2.jpg",
+                printSize: "25 cm Portraitdruck",
+                selectedSize: "M"
+            },
+            {
+                id: 3,
+                name: "Purple Dream Profile",
+                price: 29.90,
+                color: "Burgundy Edition",
+                img: "SHIRT3.jpg",
+                printSize: "22 cm Profile Print",
+                selectedSize: "M"
+            }
+        ];
+
+        // STATE MANAGEMENT
+        let cart = [];
+
+        // INIT APP
+        document.addEventListener("DOMContentLoaded", () => {
+            lucide.createIcons();
+            setupThemeToggle();
+            setupDrawers();
+            setupCalculator();
+            updateCartUI();
+        });
+
+        // THEME TOGGLE (LIGHT/DARK)
+        function setupThemeToggle() {
+            const btn = document.getElementById("themeToggleBtn");
+            btn.addEventListener("click", () => {
+                document.documentElement.classList.toggle("dark");
+            });
+        }
+
+        // DRAWERS LOGIC
+        function setupDrawers() {
+            const cartBtn = document.getElementById("cartBtn");
+            const closeCartBtn = document.getElementById("closeCartBtn");
+            const cartDrawer = document.getElementById("cartDrawer");
+            const cartPanel = document.getElementById("cartPanel");
+            const cartBackdrop = document.getElementById("cartBackdrop");
+
+            const devDrawerBtn = document.getElementById("devDrawerBtn");
+            const devDrawer = document.getElementById("devDrawer");
+            const closeDevBtn = document.getElementById("closeDevBtn");
+
+            // Open Cart
+            cartBtn.addEventListener("click", () => {
+                cartDrawer.classList.remove("pointer-events-none", "opacity-0");
+                cartPanel.classList.remove("translate-x-full");
+            });
+
+            // Close Cart
+            const closeCart = () => {
+                cartDrawer.classList.add("opacity-0", "pointer-events-none");
+                cartPanel.classList.add("translate-x-full");
+            };
+            closeCartBtn.addEventListener("click", closeCart);
+            cartBackdrop.addEventListener("click", closeCart);
+
+            // Toggle Dev Inspector Drawer
+            devDrawerBtn.addEventListener("click", () => {
+                devDrawer.classList.toggle("-translate-x-full");
+            });
+            closeDevBtn.addEventListener("click", () => {
+                devDrawer.classList.add("-translate-x-full");
+            });
+        }
+
+        // SIZE SELECTION
+        function selectSize(productId, size) {
+            const product = PRODUCTS.find(p => p.id === productId);
+            if (product) product.selectedSize = size;
+
+            // Update UI buttons state
+            const buttons = document.querySelectorAll(`.size-btn-${productId}`);
+            buttons.forEach(btn => {
+                if (btn.textContent.trim() === size) {
+                    btn.className = `size-btn-${productId} border-2 border-brand-orange text-brand-orange font-bold py-1 rounded text-xs`;
+                } else {
+                    btn.className = `size-btn-${productId} border border-stone-300 dark:border-stone-700 hover:border-brand-orange py-1 rounded text-xs font-semibold`;
+                }
+            });
+        }
+
+        // ADD TO CART
+        function addToCart(productId) {
+            const product = PRODUCTS.find(p => p.id === productId);
+            if (!product) return;
+
+            const existingIndex = cart.findIndex(item => item.id === productId && item.size === product.selectedSize);
+            if (existingIndex > -1) {
+                cart[existingIndex].qty += 1;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    img: product.img,
+                    size: product.selectedSize,
+                    qty: 1
+                });
+            }
+
+            updateCartUI();
+            logHeadlessApiCall(product);
+
+            // Open Cart Drawer automatically
+            document.getElementById("cartBtn").click();
+        }
+
+        function quickAdd(productId) {
+            addToCart(productId);
+        }
+
+        // UPDATE CART UI
+        function updateCartUI() {
+            const container = document.getElementById("cartItemsContainer");
+            const badge = document.getElementById("cartCountBadge");
+            const subtotalEl = document.getElementById("cartSubtotal");
+            const vatEl = document.getElementById("cartVat");
+            const shippingEl = document.getElementById("cartShipping");
+            const totalEl = document.getElementById("cartTotal");
+            const freeShippingHint = document.getElementById("freeShippingHint");
+
+            const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+            badge.textContent = totalQty;
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 text-stone-400 space-y-3">
+                        <i data-lucide="shopping-bag" class="w-12 h-12 mx-auto stroke-1"></i>
+                        <p class="text-sm">Dein Warenkorb ist noch leer.</p>
+                    </div>
+                `;
+                subtotalEl.textContent = "0,00 €";
+                vatEl.textContent = "0,00 €";
+                shippingEl.textContent = "4,50 €";
+                totalEl.textContent = "0,00 €";
+                freeShippingHint.classList.remove("hidden");
+                lucide.createIcons();
+                return;
+            }
+
+            // Render Cart Items
+            container.innerHTML = cart.map((item, index) => `
+                <div class="flex items-center space-x-4 bg-stone-100 dark:bg-stone-800/50 p-3 rounded-xl border border-stone-200 dark:border-stone-800">
+                    <img src="${item.img}" alt="${item.name}" class="w-16 h-16 object-cover rounded-lg bg-stone-800">
+                    <div class="flex-1 min-w-0">
+                        <h4 class="font-bold text-sm truncate">${item.name}</h4>
+                        <p class="text-xs text-stone-500 font-mono">Größe: ${item.size}</p>
+                        <span class="text-xs font-black text-brand-orange">${(item.price * item.qty).toFixed(2).replace('.', ',')} €</span>
+                    </div>
+                    <div class="flex items-center space-x-1">
+                        <button onclick="changeQty(${index}, -1)" class="w-6 h-6 rounded bg-stone-200 dark:bg-stone-700 flex items-center justify-center font-bold text-xs">-</button>
+                        <span class="text-xs font-mono w-5 text-center">${item.qty}</span>
+                        <button onclick="changeQty(${index}, 1)" class="w-6 h-6 rounded bg-stone-200 dark:bg-stone-700 flex items-center justify-center font-bold text-xs">+</button>
+                    </div>
+                </div>
+            `).join("");
+
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const vat = subtotal * (0.19 / 1.19); // 19% MwSt aus Brutto
+            const shipping = totalQty >= 2 ? 0.0 : 4.50;
+            const total = subtotal + shipping;
+
+            subtotalEl.textContent = `${subtotal.toFixed(2).replace('.', ',')} €`;
+            vatEl.textContent = `${vat.toFixed(2).replace('.', ',')} €`;
+            shippingEl.textContent = shipping === 0 ? "KOSTENLOS" : `${shipping.toFixed(2).replace('.', ',')} €`;
+            totalEl.textContent = `${total.toFixed(2).replace('.', ',')} €`;
+
+            if (totalQty >= 2) {
+                freeShippingHint.innerHTML = "🎉 Du erhältst <strong>KOSTENLOSEN VERSAND</strong>!";
+                freeShippingHint.className = "text-[11px] text-emerald-500 font-semibold";
+            } else {
+                freeShippingHint.innerHTML = "💡 Füge noch 1 Shirt hinzu für KOSTENLOSEN Versand!";
+                freeShippingHint.className = "text-[11px] text-brand-orange font-semibold";
+            }
+
+            lucide.createIcons();
+        }
+
+        function changeQty(index, delta) {
+            cart[index].qty += delta;
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            }
+            updateCartUI();
+        }
+
+        // SIMULATED HEADLESS API INSPECTOR LOGS
+        function logHeadlessApiCall(product) {
+            const consoleLog = document.getElementById("apiConsoleLog");
+            const time = new Date().toLocaleTimeString();
+
+            const payload = {
+                endpoint: "POST /store/carts/cart_01J88X/line-items",
+                status: 200,
+                data: {
+                    variant_id: `var_${product.name.toLowerCase().replace(/\s+/g, '_')}_${product.selectedSize}`,
+                    title: product.name,
+                    unit_price: 2990,
+                    quantity: 1,
+                    metadata: {
+                        pod_supplier: "Shirtee_DTG_EU",
+                        artwork_id: "art_vec_2026",
+                        print_size_cm: 24
+                    }
+                }
+            };
+
+            const logEntry = document.createElement("div");
+            logEntry.className = "border-b border-stone-800 pb-2 text-[11px]";
+            logEntry.innerHTML = `
+                <span class="text-stone-500">[${time}]</span> <span class="text-emerald-400 font-bold">200 OK</span> <br>
+                <span class="text-brand-orange">${payload.endpoint}</span>
+                <pre class="text-stone-300 mt-1 text-[10px]">${JSON.stringify(payload.data, null, 2)}</pre>
+            `;
+
+            consoleLog.prepend(logEntry);
+
+            // Open Dev Inspector Drawer briefly to show interaction if closed
+            const devDrawer = document.getElementById("devDrawer");
+            devDrawer.classList.remove("-translate-x-full");
+        }
+
+        // MARGIN CALCULATOR LOGIC
+        function setupCalculator() {
+            const priceInput = document.getElementById("calcPriceInput");
+            const podInput = document.getElementById("calcPodInput");
+            const adInput = document.getElementById("calcAdInput");
+
+            const updateCalc = () => {
+                const price = parseFloat(priceInput.value);
+                const pod = parseFloat(podInput.value);
+                const ad = parseFloat(adInput.value);
+
+                document.getElementById("calcPriceVal").textContent = `${price.toFixed(2)} €`;
+                document.getElementById("calcPodVal").textContent = `${pod.toFixed(2)} €`;
+                document.getElementById("calcAdVal").textContent = `${ad.toFixed(2)} €`;
+
+                const vat = price * (0.19 / 1.19);
+                const fee = price * 0.03;
+                const profit = price - vat - fee - pod - ad;
+                const margin = (profit / price) * 100;
+
+                document.getElementById("calcVatVal").textContent = `-${vat.toFixed(2)} €`;
+                document.getElementById("calcFeeVal").textContent = `-${fee.toFixed(2)} €`;
+                document.getElementById("calcPodOutVal").textContent = `-${pod.toFixed(2)} €`;
+                document.getElementById("calcAdOutVal").textContent = `-${ad.toFixed(2)} €`;
+
+                const profitEl = document.getElementById("calcProfitVal");
+                profitEl.textContent = `${profit.toFixed(2).replace('.', ',')} €`;
+                profitEl.className = profit > 0 ? "text-2xl font-black text-emerald-500 font-display" : "text-2xl font-black text-rose-500 font-display";
+
+                document.getElementById("calcMarginVal").textContent = `${margin.toFixed(1)}%`;
+            };
+
+            priceInput.addEventListener("input", updateCalc);
+            podInput.addEventListener("input", updateCalc);
+            adInput.addEventListener("input", updateCalc);
+        }
+
+        // QUICK VIEW MODAL LOGIC
+        function openQuickView(id) {
+            const product = PRODUCTS.find(p => p.id === id);
+            if (!product) return;
+
+            document.getElementById("qvImg").src = product.img;
+            document.getElementById("qvTitle").textContent = product.name;
+            document.getElementById("qvDesc").textContent = `${product.color} mit digitalisiertem Vector-Artwork. Vektorisiert ohne Handzeichnungs- oder Stiftspuren. Optimierte Platzierung (${product.printSize}) für modernste Streetwear-Ästhetik.`;
+            document.getElementById("qvAddBtn").onclick = () => {
+                addToCart(id);
+                closeQuickView();
+            };
+
+            const modal = document.getElementById("quickViewModal");
+            modal.classList.remove("opacity-0", "pointer-events-none");
+        }
+
+        function closeQuickView() {
+            const modal = document.getElementById("quickViewModal");
+            modal.classList.add("opacity-0", "pointer-events-none");
+        }
+
+        function triggerCheckout() {
+            if (cart.length === 0) return;
+            alert("🚀 Simulierter Stripe Elements Checkout!\n\nIn einer produktiven Live-Umgebung leitet Medusa.js nun die PaymentIntent-ID an Stripe weiter und schickt nach Zahlungseingang den Print-Job per Webhook an Shirtee/Printful.");
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
